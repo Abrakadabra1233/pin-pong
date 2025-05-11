@@ -39,6 +39,10 @@ FPS = 60
 
 player_p = Player("rocket P.png", 30, 200, 5, 50, 200)
 player_l = Player("rocket L.png", 520, 200, 5, 50, 200)
+boll = GameSprite("boll.png", 200, 200, 5, 50, 50)
+
+speed_x = boll.speed
+speed_y = boll.speed
 
 
 while game:
@@ -48,11 +52,26 @@ while game:
     if finish != True:
         window.fill(BACK)
 
-        player_l.reset()
-        player_p.reset()
+        boll.rect.x += speed_x
+        boll.rect.y += speed_y
 
         player_p.update_p()
         player_l.update_l()
+
+
+        if boll.rect.y > win_height - 50 or boll.rect.y < 0:
+            speed_y *= -1
+
+        if sprite.collide_rect(player_l, boll)  or sprite.collide_rect(player_p, boll):
+            speed_x *= -1
+
+        player_l.reset()
+        player_p.reset()
+
+        boll.reset()
+
+
+
 
     display.update()
     clock.tick(FPS)
