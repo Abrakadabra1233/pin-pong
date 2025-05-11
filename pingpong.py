@@ -44,6 +44,12 @@ boll = GameSprite("boll.png", 200, 200, 5, 50, 50)
 speed_x = boll.speed
 speed_y = boll.speed
 
+font.init()
+font = font.Font(None, 35)
+lose_p = font.render("Игрок 1 проиграл!", True, (0, 255, 0))
+lose_l = font.render("Игрок 2 проиграл!!!!!", True, (0, 255, 0))
+
+
 
 while game:
     for e in event.get():
@@ -64,6 +70,14 @@ while game:
 
         if sprite.collide_rect(player_l, boll)  or sprite.collide_rect(player_p, boll):
             speed_x *= -1
+
+        if boll.rect.x < 0: #levaya granicha - levi proigral
+            window.blit(lose_p, (200, 200))
+            finish = True
+        
+        if boll.rect.x > 0:
+            window.blit(lose_l, (200, 200))
+            finish = True
 
         player_l.reset()
         player_p.reset()
